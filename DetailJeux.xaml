@@ -1,0 +1,116 @@
+﻿<Window x:Class="Projet_DesktopDev_Antoine_Richard.DetailJeux"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="DetailJeux" Height="600" Width="930" Background="#063455" 
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <!-- Main Grid for Layout -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="190"/>
+            <!-- Left Sidebar -->
+            <ColumnDefinition Width="*"/>
+            <!-- Main Content -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Sidebar -->
+        <Grid Background="#173067" Width="200" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+            <StackPanel VerticalAlignment="Top" Margin="10">
+                <Image Source="Images/logo.png" Width="100" Height="100" HorizontalAlignment="Center" />
+                <Button x:Name="btn_accueil" Content="Accueil" Margin="0,50,0,0" Width="150" Height="40" FontSize="14"
+                Background="#083496" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="btn_accueil_Click" />
+                <Button x:Name="btn_gestion" Content="Gestion Jeux" Margin="0,20,0,0" Width="150" Height="40" FontSize="14"
+                Background="#083496" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="btn_gestion_Click" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Main Content -->
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="270"/>
+                <!-- Header -->
+                <RowDefinition Height="0*"/>
+                <!-- Body -->
+                <RowDefinition Height="Auto" MinHeight="65"/>
+                <!-- Footer -->
+            </Grid.RowDefinitions>
+
+
+			<!-- Titre principal -->
+			<Label x:Name="Titre"
+                   Content="GameCollector"
+                   Foreground="White"
+                   FontSize="20" 
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,10"
+                   RenderSize="150, 30"
+                />
+
+			<!-- Body -->
+            <Grid Margin="26,70,20,-192" Grid.RowSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="171"/>
+                    <!-- Left Content -->
+                    <ColumnDefinition Width="503*"/>
+                    <!-- Right Content -->
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Name -->
+                    <RowDefinition Height="Auto" MinHeight="310"/>
+                    <!-- Separator -->
+                    <RowDefinition/>
+                    <!-- Details -->
+                </Grid.RowDefinitions>
+
+                <Button x:Name="Return"
+                     Content="Retour"
+                     Width="80"
+                     Background="#083496"
+                     FontSize="14"
+                     Foreground="White"
+                     Height="25"
+                     Margin="0,0,60,0"
+                     Grid.RowSpan="2" 
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Top" 
+                     Click="Return_Click"/>
+
+                <Label x:Name="Status_Form" Grid.RowSpan="2" Grid.Column="1" Content="" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="-10,0,0,300" Height="30"/>
+
+                <!-- Name -->
+                <Label x:Name="Name_Form" Grid.Column="1" Content="" Foreground="White" FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="-170,74,0,0" Grid.Row="1" />
+
+                <Image x:Name="Image_Form" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Height="150" Width="110" Margin="0,15,140,0" RenderTransformOrigin="0.5,0.5"/>
+
+                <!-- Separator -->
+                <Rectangle x:Name="Separateur" Grid.Row="1" Grid.ColumnSpan="2" Fill="White" Margin="0,130,0,54" Height="2"/>
+
+                <!-- Details -->
+                <StackPanel Grid.Row="2" Grid.Column="0" Margin="10,-100,10,0" VerticalAlignment="Top" Height="187">
+                    <Label x:Name="Description" Content="DESCRIPTION :" FontSize="12" Margin="0,10" Foreground="White"/>
+                    <Label x:Name="Année" Content="ANNEE :" FontSize="12" Margin="0,10" Foreground="White"/>
+                    <Label x:Name="Plateforme" Content="PLATEFORME :" FontSize="12" Margin="0,10" Foreground="White"/>
+                    <Label x:Name="Genre" Content="GENRE :" FontSize="12" Margin="0,10" Foreground="White"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Grid.Column="1" Margin="10,-100,10,0" VerticalAlignment="Top" Height="187">
+                    <Label x:Name="Description_Form" Content="" FontSize="12" Margin="0,10" Foreground="White"/>
+                    <Label x:Name="Annee_Form" Content="" FontSize="12" Margin="0,10" Foreground="White"/>
+                    <Label x:Name="Plateforme_Form" Content="" FontSize="12" Margin="0,10" Foreground="White"/>
+                    <Label x:Name="Genre_Form" Content="" FontSize="12" Margin="0,10" Foreground="White"/>
+                </StackPanel>
+
+            </Grid>
+
+            <!-- Footer -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="530,241,0,-201" Width="180">
+                <Button x:Name="Modifier" Content="Modifier" FontSize="14" Background="#FFC9C01B" Width="80" Height="25" Margin="10,0" Click="Modifier_Click"/>
+                <Button x:Name="Supprimer" Content="Supprimer" FontSize="14" Background="#FFED4545" Width="80" Height="25" Click="Supprimer_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

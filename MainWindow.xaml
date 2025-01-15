@@ -1,0 +1,94 @@
+﻿<Window x:Class="Projet_DesktopDev_Antoine_Richard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        Title="GameCollector" Height="582" Width="930" Background="#063455" 
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <!-- Menu latéral -->
+        <Grid Background="#173067" Width="200" HorizontalAlignment="Left">
+            <StackPanel VerticalAlignment="Top" Margin="10">
+                <Image Source="Images\logo.png" Width="100" Height="100" HorizontalAlignment="Center" />
+                <Button x:Name="btn_accueil" Content="Accueil" Margin="0,50,0,0" Width="150" Height="40" FontSize="14"
+                        Background="#083496" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="btn_accueil_Click" />
+                <Button x:Name="btn_gestion" Content="Gestion Jeux" Margin="0,20,0,0" Width="150" Height="40" FontSize="14"
+                        Background="#083496" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="btn_gestion_Click" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Contenu principal -->
+        <Grid Margin="200,10,10,10">
+            <TextBlock Text="GameCollector" Foreground="White" FontSize="20" FontWeight="Bold"
+                       VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" />
+
+            <!-- Grille des statistiques -->
+            <UniformGrid Rows="2" Columns="2" Margin="20,50,20,20" VerticalAlignment="Center">
+                <!-- Stat par genre -->
+                <Border Background="#3E527D" CornerRadius="10" Padding="10" Margin="10,50,-120,0" Width="390" Height="150" Grid.Row="0" Grid.Column="0">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Width="200">
+                            <TextBlock Text="Stat par genre" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                            <ItemsControl ItemsSource="{Binding GenreStats}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                            <Ellipse Width="10" Height="10" Fill="{Binding Fill}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding Title}" Foreground="White"/>
+                                            <TextBlock Text="{Binding Count}" Foreground="White"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                        <oxy:PlotView Model="{Binding GenrePlotModel}"  Width="125" Height="125" Margin="25,0,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Total -->
+                <Border Background="#3E527D" CornerRadius="10" Padding="10" Margin="100,50,0,0" Width="150" Height="150">
+                    <StackPanel>
+                        <TextBlock Text="Total" Foreground="White" FontWeight="Bold" Margin="0,0,0,10" FontSize="14" HorizontalAlignment="Left"/>
+                        <Grid>
+                            <Ellipse Stroke="#FF173067" Width="100" Height="100" StrokeThickness="10" />
+                            <TextBlock Text="{Binding TotalGames}" Foreground="White" FontSize="24" FontWeight="Bold"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Terminé -->
+                <Border Background="#3E527D" CornerRadius="10" Padding="10" Margin="0,20,100,0" Width="150" Height="150">
+                    <StackPanel>
+                        <TextBlock Text="Terminé" Foreground="White" FontWeight="Bold" Margin="0,0,0,10" FontSize="14" HorizontalAlignment="Left"/>
+                        <Grid>
+                            <Ellipse Stroke="#FF173067" Width="100" Height="100" StrokeThickness="10" />
+                            <TextBlock Text="{Binding FinishedGames}" Foreground="White" FontSize="24" FontWeight="Bold"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Stat par plateforme -->
+                <Border Background="#3E527D" CornerRadius="10" Padding="10" Margin="-100,20,35,0" Width="390" Height="150" Grid.Row="0" Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Width="200">
+                            <TextBlock Text="Stat par plateforme" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                            <ItemsControl ItemsSource="{Binding PlatformStats}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                            <Ellipse Width="10" Height="10" Fill="{Binding Fill}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding Title}" Foreground="White"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                        <oxy:PlotView Model="{Binding PlatformPlotModel}" Width="125" Height="125" Margin="25,0,0,0"/>
+                    </StackPanel>
+                </Border>
+
+            </UniformGrid>
+        </Grid>
+    </Grid>
+</Window>

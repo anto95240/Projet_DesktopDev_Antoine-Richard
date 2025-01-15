@@ -1,0 +1,230 @@
+﻿<Window x:Class="Projet_DesktopDev_Antoine_Richard.AddJeux"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="UpdateJeux" Height="582" Width="930" Background="#063455" 
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <!-- Définit la structure principale avec deux colonnes -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <!-- Menu latéral -->
+            <ColumnDefinition Width="*" />
+            <!-- Contenu principal -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Menu latéral -->
+        <Grid Background="#173067" Width="200" HorizontalAlignment="Left">
+            <StackPanel VerticalAlignment="Top" Margin="10">
+                <Image x:Name="logo" Source="Images/logo.png" Width="100" Height="100" HorizontalAlignment="Center" />
+                <Button x:Name="btn_accueil" Content="Accueil" Margin="0,50,0,0" Width="150" Height="40" FontSize="14"
+                Background="#083496" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="btn_accueil_Click" />
+                <Button x:Name="btn_Add" Content="Gestion Jeux" Margin="0,20,0,0" Width="150" Height="40" FontSize="14"
+                Background="#083496" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="btn_gestion_Click" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Contenu principal -->
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <!-- Titre -->
+                <RowDefinition Height="Auto" />
+                <!-- Label de modification -->
+                <RowDefinition Height="*" />
+                <!-- Formulaire -->
+                <RowDefinition Height="Auto" />
+                <!-- Bouton Modifier -->
+            </Grid.RowDefinitions>
+
+            <!-- Titre principal -->
+            <Label x:Name="Titre"
+                   Content="GameCollector"
+                   Foreground="White"
+                   FontSize="20" 
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,10"
+ />
+
+            <!-- Label de modification -->
+            <TextBox x:Name="LabelAdd"
+                     Grid.Row="1"
+                     Text="NOUVEAU JEUX"
+                     Width="164"
+                     Background="#FF0EB33B"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     TextAlignment="Center"
+                     FontSize="16"
+                     Height="30"
+                     Margin="0,0,400,0"
+                     HorizontalContentAlignment="Center" 
+                     VerticalContentAlignment="Center"/>
+
+            <Button x:Name="Return"
+                 Grid.Row="1"
+                 Content="Retour"
+                 Width="80"
+                 Background="#083496"
+                 FontSize="14"
+                 Foreground="White"
+                 Height="25"
+                 Margin="0,60,600,0"
+                 Grid.RowSpan="2" 
+                 HorizontalAlignment="Center" 
+                 VerticalAlignment="Top" 
+                 Click="Return_Click"/>
+            
+            <!-- Formulaire -->
+            <Grid Grid.Row="2" Margin="50,90,50,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <!-- Labels -->
+                    <ColumnDefinition Width="*" />
+                    <!-- Valeurs -->
+                </Grid.ColumnDefinitions>
+
+                <!-- Labels à gauche -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Top">
+                    <!-- Nom -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,11">
+                        <Label x:Name="Nom_Form" Content="NOM :" FontSize="12" Foreground="White" />
+                        <TextBlock FontSize="12" Foreground="#FFA500" Text="🛈" Margin="5,0,0,0" Cursor="Hand">
+                            <TextBlock.ToolTip>
+                                <ToolTip Placement="Right" HorizontalOffset="5" VerticalOffset="0"
+                                    PlacementTarget="{Binding RelativeSource={RelativeSource Self}}">
+                                    Entrez le nom du jeu (ex. : *The Legend of Zelda*).
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!-- Description -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                        <Label x:Name="Description_Form" Content="DESCRIPTION :" FontSize="12" Foreground="White" />
+                        <TextBlock FontSize="12" Foreground="#FFA500" Text="🛈" Margin="5,0,0,0" Cursor="Hand">
+                            <TextBlock.ToolTip>
+                                <ToolTip Placement="Right" HorizontalOffset="5" VerticalOffset="0"
+                                    PlacementTarget="{Binding RelativeSource={RelativeSource Self}}">
+                                    Donnez une brève description du jeu (ex. : *Un jeu d'aventure épique*).
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!-- Plateforme -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,13">
+                        <Label x:Name="Plateforme_Form" Content="PLATEFORME :" FontSize="12" Foreground="White" />
+                        <TextBlock FontSize="12" Foreground="#FFA500" Text="🛈" Margin="5,0,0,0" Cursor="Hand">
+                            <TextBlock.ToolTip>
+                                <ToolTip Placement="Right" HorizontalOffset="5" VerticalOffset="0"
+                                    PlacementTarget="{Binding RelativeSource={RelativeSource Self}}">
+                                    Choisissez la plateforme cible (ex. : *PC, Xbox, PlayStation*).
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!-- Genre -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <Label x:Name="Genre_Form" Content="GENRE :" FontSize="12" Foreground="White" />
+                        <TextBlock FontSize="12" Foreground="#FFA500" Text="🛈" Margin="5,0,0,0" Cursor="Hand">
+                            <TextBlock.ToolTip>
+                                <ToolTip Placement="Right" HorizontalOffset="5" VerticalOffset="0"
+                                    PlacementTarget="{Binding RelativeSource={RelativeSource Self}}">
+                                    Indiquez le genre du jeu (ex. : *RPG, Action, Aventure*).
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!-- Année -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,11">
+                        <Label x:Name="Annee_Form" Content="ANNEE :" FontSize="12" Foreground="White" />
+                        <TextBlock FontSize="12" Foreground="#FFA500" Text="🛈" Margin="5,0,0,0" Cursor="Hand">
+                            <TextBlock.ToolTip>
+                                <ToolTip Placement="Right" HorizontalOffset="5" VerticalOffset="0"
+                                    PlacementTarget="{Binding RelativeSource={RelativeSource Self}}">
+                                    Entrez l'année de sortie (ex. : *2023*).
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!-- Status -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <Label x:Name="Status_Form" Content="STATUS :" FontSize="12" Foreground="White" />
+                        <TextBlock FontSize="12" Foreground="#FFA500" Text="🛈" Margin="5,0,0,0" Cursor="Hand">
+                            <TextBlock.ToolTip>
+                                <ToolTip Placement="Right" HorizontalOffset="5" VerticalOffset="0"
+                                    PlacementTarget="{Binding RelativeSource={RelativeSource Self}}">
+                                    Indiquez le statut du jeu (ex. : *En cours, Terminé*).
+                                </ToolTip>                                
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!-- Image -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Label x:Name="Image_Form" Content="IMAGE :" FontSize="12" Foreground="White" />
+                        <TextBlock FontSize="12" Foreground="#FFA500" Text="🛈" Margin="5,0,0,0" Cursor="Hand">
+                            <TextBlock.ToolTip>
+                                <ToolTip Placement="Right" HorizontalOffset="5" VerticalOffset="0"
+                                    PlacementTarget="{Binding RelativeSource={RelativeSource Self}}">
+                                    Cliquez sur le bouton pour choisir une image du jeu.
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Valeurs à droite -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Top" >
+                    <TextBox x:Name="nom_Form_Add" Text="" FontSize="12" Foreground="Black" Padding="0,0,0,10" Margin="0,0,0,10" />
+                    <TextBox x:Name="Description_Form_Add" Text="" FontSize="12" Foreground="Black" Padding="0,0,0,10" Margin="0,0,0,10" />
+                    <TextBox x:Name="Plateforme_Form_Add" Text="" FontSize="12" Foreground="Black" Padding="0,0,0,10" Margin="0,0,0,10" />
+                    <TextBox x:Name="Genre_Form_Add" Text=""  FontSize="12" Foreground="Black" Padding="0,0,0,10" Margin="0,0,0,10" />
+                    <TextBox x:Name="Année_Form_Add" Text="" FontSize="12" Foreground="Black" Padding="0,0,0,10" Margin="0,0,0,10" />
+                    <Button x:Name="Status_Form_Add"
+                            Content="Choisir un status"
+                            Width="120"
+                            Height="25"
+                            HorizontalAlignment="Left" 
+                            Margin="0,0,0,10"
+                            Click="Status_Form_Add_Click"/>
+
+                    <Popup x:Name="StatusPopup" Placement="Center" StaysOpen="False">
+                        <Border Background="White" BorderBrush="Black" BorderThickness="1" Padding="10">
+                            <StackPanel>
+                                <TextBlock Text="Choisir un statut" FontWeight="Bold" Margin="0,0,0,10"/>
+                                <ComboBox x:Name="StatusComboBox" Width="200" Height="30"/>
+                                <Button Content="Ajouter un nouveau statut" Width="200" Height="30" Margin="0,10,0,0" Click="AjouterNouveauStatus_Click"/>
+                                <Button Content="Valider" Width="200" Height="30" Margin="0,10,0,0" Click="ValiderStatus_Click"/>
+                                <Button Content="Fermer" Width="200" Height="30" Margin="0,10,0,0" Click="FermerPopup_Click"/>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+
+                    <Button x:Name="Image_Form_Add"
+                        Content="Choisir une image"
+                        Width="120"
+                        Height="25"
+                        HorizontalAlignment="Left" 
+                        Click="Image_Form_Add_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Bouton Modifier -->
+            <Button x:Name="Ajouter"
+                    Grid.Row="3"
+                    Content="Ajouter"
+                    FontSize="14"
+                    Background="#FF0EB33B"
+                    Width="130"
+                    Height="25"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0,10" Click="Ajouter_Click" />
+        </Grid>
+    </Grid>
+</Window>
