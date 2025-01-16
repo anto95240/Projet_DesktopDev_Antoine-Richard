@@ -7,15 +7,15 @@
         Title="DetailJeux" Height="600" Width="930" Background="#063455" 
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <!-- Main Grid for Layout -->
+        
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="190"/>
-            <!-- Left Sidebar -->
-            <ColumnDefinition Width="*"/>
-            <!-- Main Content -->
+            <!-- Menu latéral -->
+            <ColumnDefinition Width="200" />
+            <!-- Contenu principal -->
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Left Sidebar -->
+        <!-- Menu latéral -->
         <Grid Background="#173067" Width="200" HorizontalAlignment="Left" Grid.ColumnSpan="2">
             <StackPanel VerticalAlignment="Top" Margin="10">
                 <Image Source="Images/logo.png" Width="100" Height="100" HorizontalAlignment="Center" />
@@ -26,19 +26,18 @@
             </StackPanel>
         </Grid>
 
-        <!-- Main Content -->
+        <!-- Contenu principal -->
         <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" MinHeight="270"/>
-                <!-- Header -->
+                <!-- Titre -->
+                <RowDefinition Height="270"/>
+                <!-- Corps -->
                 <RowDefinition Height="0*"/>
-                <!-- Body -->
-                <RowDefinition Height="Auto" MinHeight="65"/>
-                <!-- Footer -->
+                <!-- Boutons -->
+                <RowDefinition Height="65"/>
             </Grid.RowDefinitions>
 
-
-			<!-- Titre principal -->
+            <!-- Titre principal -->
 			<Label x:Name="Titre"
                    Content="GameCollector"
                    Foreground="White"
@@ -49,23 +48,24 @@
                    RenderSize="150, 30"
                 />
 
-			<!-- Body -->
+			<!-- Corps -->
             <Grid Margin="26,70,20,-192" Grid.RowSpan="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="171"/>
-                    <!-- Left Content -->
+                    <!-- Labels -->
                     <ColumnDefinition Width="503*"/>
-                    <!-- Right Content -->
+                    <!-- Valeurs -->
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <!-- Name -->
+                    <!-- Information Importante -->
                     <RowDefinition Height="Auto" MinHeight="310"/>
-                    <!-- Separator -->
+                    <!-- Separateur -->
                     <RowDefinition/>
-                    <!-- Details -->
+                    <!-- Détails -->
                 </Grid.RowDefinitions>
 
+                <!-- Information Importante -->
                 <Button x:Name="Return"
                      Content="Retour"
                      Width="80"
@@ -81,15 +81,14 @@
 
                 <Label x:Name="Status_Form" Grid.RowSpan="2" Grid.Column="1" Content="" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="-10,0,0,300" Height="30"/>
 
-                <!-- Name -->
                 <Label x:Name="Name_Form" Grid.Column="1" Content="" Foreground="White" FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="-170,74,0,0" Grid.Row="1" />
 
                 <Image x:Name="Image_Form" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Height="150" Width="110" Margin="0,15,140,0" RenderTransformOrigin="0.5,0.5"/>
 
-                <!-- Separator -->
+                <!-- Séparateur -->
                 <Rectangle x:Name="Separateur" Grid.Row="1" Grid.ColumnSpan="2" Fill="White" Margin="0,130,0,54" Height="2"/>
 
-                <!-- Details -->
+                <!-- Détails -->
                 <StackPanel Grid.Row="2" Grid.Column="0" Margin="10,-100,10,0" VerticalAlignment="Top" Height="187">
                     <Label x:Name="Description" Content="DESCRIPTION :" FontSize="12" Margin="0,10" Foreground="White"/>
                     <Label x:Name="Année" Content="ANNEE :" FontSize="12" Margin="0,10" Foreground="White"/>
@@ -106,8 +105,8 @@
 
             </Grid>
 
-            <!-- Footer -->
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="530,241,0,-201" Width="180">
+            <!-- Boutons -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="500,241,0,-200" Width="250">
                 <Button x:Name="Modifier" Content="Modifier" FontSize="14" Background="#FFC9C01B" Width="80" Height="25" Margin="10,0" Click="Modifier_Click"/>
                 <Button x:Name="Supprimer" Content="Supprimer" FontSize="14" Background="#FFED4545" Width="80" Height="25" Click="Supprimer_Click"/>
             </StackPanel>

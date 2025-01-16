@@ -12,19 +12,19 @@ namespace Projet_DesktopDev_Antoine_Richard.Class_DB
         [Key]
         public int game_id { get; set; }
 
-        public string name { get; set; }
+        public string Name { get; set; }
 
-        public string description { get; set; }
+        public string Description { get; set; }
 
-        public string genre { get; set; }
+        public string Genre { get; set; }
 
-        public string plateforme { get; set; }
+        public string Plateforme { get; set; }
 
-        public string annee { get; set; }
+        public string Annee { get; set; }
 
-        public string image { get; set; }
+        public string Image { get; set; }
 
-        public Status_Table status { get; set; } = new Status_Table();  // Initialisation par défaut
+        public Status_Table status { get; set; } = new Status_Table();
 
     }
 }

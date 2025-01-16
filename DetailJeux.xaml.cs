@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace Projet_DesktopDev_Antoine_Richard
 {
-    /// <summary>
-    /// Logique d'interaction pour DetailJeux.xaml
-    /// </summary>
     public partial class DetailJeux : Window
     {
 
@@ -60,25 +57,22 @@ namespace Projet_DesktopDev_Antoine_Richard
 
         private void LoadGameDetails()
         {
-            // Appelle la fonction backend pour récupérer les détails du jeu
             var gameDetails = SelectGame.GetGameById(GameId);
 
             if (gameDetails != null)
             {
-                // Remplir les champs dans l'interface utilisateur
-                Status_Form.Content = gameDetails.status.status_name;
-                Name_Form.Content = gameDetails.name;
-                Description_Form.Content = gameDetails.description;
-                Annee_Form.Content = gameDetails.annee;
-                Plateforme_Form.Content = gameDetails.plateforme;
-                Genre_Form.Content = gameDetails.genre;
+                Status_Form.Content = gameDetails.status.Status_name;
+                Name_Form.Content = gameDetails.Name;
+                Description_Form.Content = gameDetails.Description;
+                Annee_Form.Content = gameDetails.Annee;
+                Plateforme_Form.Content = gameDetails.Plateforme;
+                Genre_Form.Content = gameDetails.Genre;
 
-                // Charger l'image dans le contrôle Image
-                if (!string.IsNullOrEmpty(gameDetails.image))
+                if (!string.IsNullOrEmpty(gameDetails.Image))
                 {
                     try
                     {
-                        var imagePath = System.IO.Path.GetFullPath(gameDetails.image);
+                        var imagePath = System.IO.Path.GetFullPath(gameDetails.Image);
                         Image_Form.Source = new BitmapImage(new Uri(imagePath));
                     }
                     catch (Exception ex)
@@ -99,27 +93,22 @@ namespace Projet_DesktopDev_Antoine_Richard
 
             if (result == MessageBoxResult.Yes)
             {
-                // Récupérer les détails du jeu (ici, GameId)
                 var deletedGame = SelectGame.GetGameById(GameId);
 
                 if (deletedGame != null)
                 {
-                    // Appeler la fonction de suppression de jeu en passant l'objet Game_Table
                     bool isDeleted = DeleteGame.DeleteJeux(deletedGame);
 
                     if (isDeleted)
                     {
-                        // Si la suppression réussit, afficher un message de confirmation
                         MessageBox.Show("Le jeu a été supprimé avec succès.", "Suppression réussie", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        // Rediriger vers la page de gestion des jeux
                         GestionJeux gestionJeuxWindow = new GestionJeux();
                         this.Close();
                         gestionJeuxWindow.Show();
                     }
                     else
                     {
-                        // Si la suppression échoue, afficher un message d'erreur
                         MessageBox.Show("Une erreur s'est produite lors de la suppression du jeu.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }

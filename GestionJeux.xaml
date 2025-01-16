@@ -7,12 +7,11 @@
         Title="Game Collector" Height="582" Width="930"
         Background="#063455" WindowStartupLocation="CenterScreen">
     <Grid>
-        <!-- Définition des colonnes -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
             <!-- Menu latéral -->
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
             <!-- Contenu principal -->
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Menu latéral -->
@@ -29,24 +28,23 @@
 
         <!-- Contenu principal -->
         <Grid Grid.Column="1">
-            <!-- Définition des lignes -->
             <Grid.RowDefinitions>
+                <!-- Header -->
                 <RowDefinition Height="120"/>
-                <!-- Barre de recherche -->
-                <RowDefinition Height="60"/>
                 <!-- Boutons de filtres -->
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
                 <!-- Grille des jeux -->
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
                 <!-- Bouton Ajouter -->
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
+            <!-- Header -->
             <Grid Grid.Row="0">
                 <TextBlock Text="GameCollector" Foreground="White" FontSize="20" FontWeight="Bold"
                            VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,20,0,0" />
             </Grid>
 
-            <!-- Barre de recherche -->
             <Grid Grid.Row="0">
                 <TextBox x:Name="SearchBox"
                          Width="200"
@@ -71,11 +69,9 @@
             </Grid>
 
             <!-- Boutons de filtres -->
-
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
                 <Button Content="Tous" Width="80" Height="30" Margin="5" 
                         Command="{Binding FilterCommand}" CommandParameter="{Binding AllFilterParameter}" />
-
                 <ItemsControl ItemsSource="{Binding Status}" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -84,7 +80,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding status_name}" Width="80" Height="30" Margin="5"
+                            <Button Content="{Binding Status_name}" Width="80" Height="30" Margin="5"
                                     Command="{Binding DataContext.FilterCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                     CommandParameter="{Binding status_id}"/>
                         </DataTemplate>
@@ -104,10 +100,10 @@
                         <DataTemplate>
                             <Border Background="#BF0D3585" CornerRadius="10" Height="280" Padding="10" Margin="10" BorderThickness="0">
                                 <StackPanel>
-                                    <Image Source="{Binding image}" Height="100" HorizontalAlignment="Center" Margin="0,5,0,0" Stretch="UniformToFill"/>
-                                    <TextBlock Text="{Binding name}" Foreground="White" FontSize="14" FontWeight="Bold" TextAlignment="Center" Width="150" Margin="0,15,0,0" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding genre}" Foreground="Gray" FontSize="12" TextAlignment="Center" />
-                                    <TextBlock Text="{Binding annee}" Foreground="DarkGray" FontSize="12" TextAlignment="Center" />
+                                    <Image Source="{Binding Image}" Height="100" HorizontalAlignment="Center" Margin="0,5,0,0" Stretch="UniformToFill"/>
+                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="14" FontWeight="Bold" TextAlignment="Center" Width="150" Margin="0,15,0,0" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding Genre}" Foreground="Gray" FontSize="12" TextAlignment="Center" />
+                                    <TextBlock Text="{Binding Annee}" Foreground="DarkGray" FontSize="12" TextAlignment="Center" />
                                     <Button Content="Détail" Width="80" Height="30" Margin="0,20,0,0" HorizontalAlignment="Center" Background="#083496" Foreground="White" BorderThickness="0" 
                                             Click="btn_detail" CommandParameter="{Binding game_id}" />
                                 </StackPanel>

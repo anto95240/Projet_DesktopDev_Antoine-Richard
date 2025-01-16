@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace Projet_DesktopDev_Antoine_Richard
 {
-    /// <summary>
-    /// Logique d'interaction pour UpdateJeux.xaml
-    /// </summary>
     public partial class UpdateJeux : Window
     {
 
@@ -55,25 +52,20 @@ namespace Projet_DesktopDev_Antoine_Richard
 
         private void LoadGameDetails()
         {
-            // Appelle la fonction backend pour récupérer les détails du jeu
             var gameDetails = SelectGame.GetGameById(GameId);
 
             if (gameDetails != null)
             {
-                // Remplir les champs dans l'interface utilisateur
-                nom_Form_Mod.Text = gameDetails.name;
-                Description_Form_Mod.Text = gameDetails.description;
-                Annee_Form_Mod.Text = gameDetails.annee;
-                Plateforme_Form_Mod.Text = gameDetails.plateforme;
-                Genre_Form_Mod.Text = gameDetails.genre;
+                nom_Form_Mod.Text = gameDetails.Name;
+                Description_Form_Mod.Text = gameDetails.Description;
+                Annee_Form_Mod.Text = gameDetails.Annee;
+                Plateforme_Form_Mod.Text = gameDetails.Plateforme;
+                Genre_Form_Mod.Text = gameDetails.Genre;
 
-                // Récupérer l'image
-                Image = gameDetails.image;
+                Image = gameDetails.Image;
 
-                // Récupérer les statuts depuis la base de données
-                List<Status_Table> statuses = GetStatutsFromDatabase();
+                List<Status_Table> statuses = SelectGame.GetAllStatus();
 
-                // Remplir la ComboBox avec les statuts
                 StatusComboBox.Items.Clear();
                 ComboBoxItem selectedStatusItem = null;
 
@@ -81,24 +73,22 @@ namespace Projet_DesktopDev_Antoine_Richard
                 {
                     var statusItem = new ComboBoxItem
                     {
-                        Content = status.status_name,
+                        Content = status.Status_name,
                         Tag = status.status_id
                     };
 
                     StatusComboBox.Items.Add(statusItem);
 
-                    // Vérifier si ce statut correspond au statut actuel du jeu
                     if (status.status_id == gameDetails.status.status_id)
                     {
                         selectedStatusItem = statusItem;
                     }
                 }
 
-                // Si un statut est trouvé, le sélectionner par défaut
                 if (selectedStatusItem != null)
                 {
                     StatusComboBox.SelectedItem = selectedStatusItem;
-                    Status_Form_Mod.Content = selectedStatusItem.Content.ToString(); // Mettre à jour le bouton
+                    Status_Form_Mod.Content = selectedStatusItem.Content.ToString();
                 }
             }
             else
@@ -115,29 +105,28 @@ namespace Projet_DesktopDev_Antoine_Richard
             if (selectedStatusItem == null)
             {
                 MessageBox.Show("Veuillez sélectionner un statut pour le jeu.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                return; // Sortir de la méthode si aucun statut n'est sélectionné
+                return;
             }
 
             var updatedGame = new Game_Table
             {
                 game_id = GameId,
-                name = nom_Form_Mod.Text.Trim(),
-                description = Description_Form_Mod.Text.Trim(),
-                annee = Annee_Form_Mod.Text.Trim(),
-                plateforme = Plateforme_Form_Mod.Text.Trim(),
-                genre = Genre_Form_Mod.Text.Trim(),
+                Name = nom_Form_Mod.Text.Trim(),
+                Description = Description_Form_Mod.Text.Trim(),
+                Annee = Annee_Form_Mod.Text.Trim(),
+                Plateforme = Plateforme_Form_Mod.Text.Trim(),
+                Genre = Genre_Form_Mod.Text.Trim(),
                 status = new Status_Table
                 {
-                    status_id = (int)selectedStatusItem.Tag, // ID du statut sélectionné
-                    status_name = selectedStatusItem.Content.ToString() // Nom du statut sélectionné
+                    status_id = (int)selectedStatusItem.Tag,
+                    Status_name = selectedStatusItem.Content.ToString() 
                 },
-                image = Image
+                Image = Image
             };
 
-            // Valider si les champs obligatoires sont remplis
-            if (string.IsNullOrWhiteSpace(updatedGame.name) || string.IsNullOrWhiteSpace(updatedGame.description) ||
-                string.IsNullOrWhiteSpace(updatedGame.annee) || string.IsNullOrWhiteSpace(updatedGame.plateforme) ||
-                string.IsNullOrWhiteSpace(updatedGame.genre))
+            if (string.IsNullOrWhiteSpace(updatedGame.Name) || string.IsNullOrWhiteSpace(updatedGame.Description) ||
+                string.IsNullOrWhiteSpace(updatedGame.Annee) || string.IsNullOrWhiteSpace(updatedGame.Plateforme) ||
+                string.IsNullOrWhiteSpace(updatedGame.Genre))
             {
                 MessageBox.Show("Tous les champs doivent être remplis, à l'exception du statut.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -149,10 +138,8 @@ namespace Projet_DesktopDev_Antoine_Richard
                 return;
             }
 
-            // Appelez la méthode de mise à jour dans la base de données
             var result = UpdateGame.UpdateJeux(updatedGame);
 
-            // Vérifiez le résultat de la mise à jour
             if (result)
             {
                 MessageBox.Show("Le jeu a été mis à jour avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -168,40 +155,34 @@ namespace Projet_DesktopDev_Antoine_Richard
 
         private void Status_Form_Mod_Click(object sender, RoutedEventArgs e)
         {
-            // Récupérer les statuts depuis la base de données
-            List<Status_Table> statuses = GetStatutsFromDatabase();
+            List<Status_Table> statuses = SelectGame.GetAllStatus();
 
-            // Effacer les éléments existants dans la ComboBox
             StatusComboBox.Items.Clear();
 
-            // Ajouter les statuts à la ComboBox
             foreach (var status in statuses)
             {
                 StatusComboBox.Items.Add(new ComboBoxItem
                 {
-                    Content = status.status_name,
+                    Content = status.Status_name,
                     Tag = status.status_id
                 });
             }
 
-            // Ouvrir la popup
             StatusPopup.IsOpen = true;
         }
 
         private void FermerPopup_Click(object sender, RoutedEventArgs e)
         {
-            // Ferme la popup sans faire de modifications
             StatusPopup.IsOpen = false;
         }
 
         private void AjouterNouveauStatus_Click(object sender, RoutedEventArgs e)
         {
-            // Afficher une boîte de saisie pour le nouveau statut
             string nouveauStatus = Microsoft.VisualBasic.Interaction.InputBox("Entrez le nouveau statut :", "Ajouter un statut", "");
 
             if (!string.IsNullOrEmpty(nouveauStatus))
             {
-                using (var connection = Fonction.GetConnection()) // Utilisation de votre méthode de connexion
+                using (var connection = Fonction.GetConnection())
                 {
                     if (connection == null)
                     {
@@ -218,32 +199,28 @@ namespace Projet_DesktopDev_Antoine_Richard
                     }
                 }
 
-                // Mettre à jour la ComboBox avec tous les statuts depuis la base de données
                 StatusComboBox.Items.Clear();
-                List<Status_Table> statuses = GetStatutsFromDatabase();
+                List<Status_Table> statuses = SelectGame.GetAllStatus();
                 ComboBoxItem newItem = null;
 
                 foreach (var status in statuses)
                 {
                     ComboBoxItem item = new ComboBoxItem
                     {
-                        Content = status.status_name,
+                        Content = status.Status_name,
                         Tag = status.status_id
                     };
                     StatusComboBox.Items.Add(item);
 
-                    // Si l'élément correspond au nouveau statut, on le sélectionne
-                    if (status.status_name == nouveauStatus)
+                    if (status.Status_name == nouveauStatus)
                     {
                         newItem = item;
                     }
                 }
 
-                // Sélectionner automatiquement le nouvel élément ajouté
                 if (newItem != null)
                 {
                     StatusComboBox.SelectedItem = newItem;
-                    // Mettre à jour le bouton avec le nouveau statut
                     Status_Form_Mod.Content = nouveauStatus;
                 }
             }
@@ -258,10 +235,9 @@ namespace Projet_DesktopDev_Antoine_Richard
             {
                 int selectedStatusId = (int)selectedItem.Tag;
 
-                // Utiliser l'ID du jeu actuel pour mettre à jour son statut
-                int currentGameId = GetCurrentGameId(); // Remplacez par la méthode qui récupère l'ID du jeu courant
+                int currentGameId = GetCurrentGameId(); 
 
-                using (var connection = Fonction.GetConnection()) // Utilisation de votre méthode de connexion
+                using (var connection = Fonction.GetConnection())
                 {
                     if (connection == null)
                     {
@@ -274,7 +250,7 @@ namespace Projet_DesktopDev_Antoine_Richard
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@statusId", selectedStatusId);
-                        command.Parameters.AddWithValue("@gameId", currentGameId); // Remplacez currentGameId par l'ID du jeu en cours
+                        command.Parameters.AddWithValue("@gameId", currentGameId);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -289,41 +265,9 @@ namespace Projet_DesktopDev_Antoine_Richard
             }
         }
 
-        // Méthode pour récupérer les statuts depuis la base de données
-        private List<Status_Table> GetStatutsFromDatabase()
-        {
-            List<Status_Table> statuses = new List<Status_Table>();
-
-            using (var connection = Fonction.GetConnection()) // Utilisation de votre méthode de connexion
-            {
-                if (connection == null) return statuses;
-
-                string query = "SELECT status_id, status_name FROM status_table";
-
-                using (var command = new SQLiteCommand(query, connection))
-                {
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            statuses.Add(new Status_Table
-                            {
-                                status_id = reader.GetInt32(0),
-                                status_name = reader.GetString(1)
-                            });
-                        }
-                    }
-                }
-            }
-            return statuses;
-        }
-
-        // Exemple de méthode pour récupérer l'ID du jeu actuel
         private int GetCurrentGameId()
         {
-            // Cette méthode doit retourner l'ID du jeu que vous modifiez
-            // Assurez-vous de bien définir cette méthode ou d'obtenir cet ID d'une autre manière
-            return 1; // Remplacez par l'ID correct
+            return 1;
         }
 
         private void Image_Form_Mod_Click(object sender, RoutedEventArgs e)

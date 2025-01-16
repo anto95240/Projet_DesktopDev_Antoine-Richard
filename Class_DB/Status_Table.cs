@@ -14,7 +14,7 @@ namespace Projet_DesktopDev_Antoine_Richard.Class_DB
         [Key]
         public int status_id { get; set; }
 
-        public string status_name { get; set; }
+        public string Status_name { get; set; }
 
     }
 }

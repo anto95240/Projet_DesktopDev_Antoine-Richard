@@ -34,7 +34,7 @@ namespace Projet_DesktopDev_Antoine_Richard
                 }
 
                 FilteredGames = new ObservableCollection<Game_Table>(Games);
-                SearchedGames = new ObservableCollection<Game_Table>(Games); // Pour la recherche
+                SearchedGames = new ObservableCollection<Game_Table>(Games);
 
                 Status = new ObservableCollection<Status_Table>(SelectGame.GetAllStatus());
 
@@ -51,94 +51,6 @@ namespace Projet_DesktopDev_Antoine_Richard
             catch (Exception ex)
             {
                 MessageBox.Show($"Erreur lors de l'initialisation des jeux : {ex.Message}");
-            }
-        }
-
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                // Vérifier que Games est bien initialisé et que SearchBox contient du texte
-                if (Games == null || Games.Count == 0)
-                {
-                    return; // Rien à filtrer si Games est null ou vide
-                }
-
-                string query = SearchBox.Text?.ToLower() ?? string.Empty;
-
-                // Si la barre de recherche est vide, on ne montre aucun résultat
-                if (string.IsNullOrEmpty(query))
-                {
-                    SearchResults.Visibility = Visibility.Collapsed;
-                    return;
-                }
-
-                // Filtrer les jeux dont le nom contient la lettre ou la chaîne recherchée
-                var filterSearch = Games.Where(game => game != null && !string.IsNullOrEmpty(game?.name) && game.name?.ToLower().Contains(query) == true);
-
-                // Vider la collection SearchedGames et ajouter les jeux filtrés
-                SearchedGames.Clear();
-                foreach (var game in filterSearch)
-                {
-                    SearchedGames.Add(game);
-                }
-
-                // Afficher ou masquer la zone de liste des résultats
-                SearchResults.Visibility = SearchedGames.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erreur lors du filtrage : {ex.Message}");
-            }
-        }
-
-
-
-        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            // Effacer le texte de base (si présent)
-            SearchBox.Text = "";
-        }
-
-        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            // Si le champ est vide, rétablir le texte de base à partir du Tag
-            if (string.IsNullOrEmpty(SearchBox.Text))
-            {
-                SearchBox.Text = "Rechercher...";
-            }
-        }
-
-
-        private void SearchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (SearchResults.SelectedItem is Game_Table selectedGame)
-            {
-                OpenGameDetail(selectedGame.game_id);
-
-            }
-        }
-
-        private void OpenGameDetail(int gameId)
-        {
-            DetailJeux detailJeuxWindow = new DetailJeux(gameId);
-            this.Close();
-            detailJeuxWindow.Show();
-        }
-
-
-        private void FilterGamesByStatus(int statusId)
-        {
-            if (Games == null || Status == null) return;
-
-            var filtered = statusId == 0
-                ? Games
-                : Games.Where(game => game.status != null && game.status.status_id == statusId);
-
-            FilteredGames.Clear();
-            foreach (var game in filtered)
-            {
-                FilteredGames.Add(game);
             }
         }
 
@@ -185,6 +97,88 @@ namespace Projet_DesktopDev_Antoine_Richard
         public void AddGameToCollection(Game_Table game)
         {
             Games.Add(game);
+        }
+
+
+        /* SEARCHBAR */
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (Games == null || Games.Count == 0)
+                {
+                    return;
+                }
+
+                string query = SearchBox.Text?.ToLower() ?? string.Empty;
+
+                if (string.IsNullOrEmpty(query))
+                {
+                    SearchResults.Visibility = Visibility.Collapsed;
+                    return;
+                }
+
+                var filterSearch = Games.Where(game => game != null && !string.IsNullOrEmpty(game?.Name) && game.Name?.ToLower().Contains(query) == true);
+                
+                SearchedGames.Clear();
+                foreach (var game in filterSearch)
+                {
+                    SearchedGames.Add(game);
+                }
+
+                SearchResults.Visibility = SearchedGames.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du filtrage : {ex.Message}");
+            }
+        }
+
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            SearchBox.Text = "";
+        }
+
+        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(SearchBox.Text))
+            {
+                SearchBox.Text = "Rechercher...";
+            }
+        }
+
+        private void SearchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SearchResults.SelectedItem is Game_Table selectedGame)
+            {
+                OpenGameDetail(selectedGame.game_id);
+            }
+        }
+
+        private void OpenGameDetail(int gameId)
+        {
+            DetailJeux detailJeuxWindow = new DetailJeux(gameId);
+            this.Close();
+            detailJeuxWindow.Show();
+        }
+
+
+        /* FILTRE */
+
+        private void FilterGamesByStatus(int statusId)
+        {
+            if (Games == null || Status == null) return;
+
+            var filtered = statusId == 0
+                ? Games
+                : Games.Where(game => game.status != null && game.status.status_id == statusId);
+
+            FilteredGames.Clear();
+            foreach (var game in filtered)
+            {
+                FilteredGames.Add(game);
+            }
         }
     }
 }

@@ -35,17 +35,15 @@ namespace Projet_DesktopDev_Antoine_Richard.Class_DB
 
                     using (var command = new SQLiteCommand(query, connection))
                     {
-                        // Ajout des paramètres
-                        command.Parameters.AddWithValue("@Name", updatedGame.name);
-                        command.Parameters.AddWithValue("@Description", updatedGame.description);
-                        command.Parameters.AddWithValue("@Annee", updatedGame.annee);
-                        command.Parameters.AddWithValue("@Plateforme", updatedGame.plateforme);
-                        command.Parameters.AddWithValue("@Genre", updatedGame.genre.ToLower());
-                        command.Parameters.AddWithValue("@Image", updatedGame.image);
-                        command.Parameters.AddWithValue("@StatusId", updatedGame.status.status_id); // Mise à jour du statut
+                        command.Parameters.AddWithValue("@Name", updatedGame.Name);
+                        command.Parameters.AddWithValue("@Description", updatedGame.Description);
+                        command.Parameters.AddWithValue("@Annee", updatedGame.Annee);
+                        command.Parameters.AddWithValue("@Plateforme", updatedGame.Plateforme);
+                        command.Parameters.AddWithValue("@Genre", updatedGame.Genre.ToLower());
+                        command.Parameters.AddWithValue("@Image", updatedGame.Image);
+                        command.Parameters.AddWithValue("@StatusId", updatedGame.status.status_id);
                         command.Parameters.AddWithValue("@Id", updatedGame.game_id);
 
-                        // Exécution de la requête
                         int rowsAffected = command.ExecuteNonQuery();
 
                         if (rowsAffected == 0)

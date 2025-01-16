@@ -20,7 +20,6 @@ public class RelayCommand<T> : ICommand
             return _canExecute == null || _canExecute((T)parameter);
         }
 
-        // Si le paramètre n'est pas du type attendu, la commande est désactivée
         return false;
     }
 

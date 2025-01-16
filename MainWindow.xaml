@@ -23,12 +23,18 @@
 
             <!-- Grille des statistiques -->
             <UniformGrid Rows="2" Columns="2" Margin="20,50,20,20" VerticalAlignment="Center">
+                
                 <!-- Stat par genre -->
                 <Border Background="#3E527D" CornerRadius="10" Padding="10" Margin="10,50,-120,0" Width="390" Height="150" Grid.Row="0" Grid.Column="0">
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Width="200">
                             <TextBlock Text="Stat par genre" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
                             <ItemsControl ItemsSource="{Binding GenreStats}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" ItemWidth="80"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" Margin="0,5">
@@ -40,7 +46,7 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </StackPanel>
-                        <oxy:PlotView Model="{Binding GenrePlotModel}"  Width="125" Height="125" Margin="25,0,0,0"/>
+                        <oxy:PlotView Model="{Binding GenrePlotModel}"  Width="150" Height="125" Margin="25,0,0,0"/>
                     </StackPanel>
                 </Border>
 
@@ -74,6 +80,11 @@
                         <StackPanel Width="200">
                             <TextBlock Text="Stat par plateforme" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
                             <ItemsControl ItemsSource="{Binding PlatformStats}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" ItemWidth="80"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" Margin="0,5">
@@ -84,10 +95,9 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </StackPanel>
-                        <oxy:PlotView Model="{Binding PlatformPlotModel}" Width="125" Height="125" Margin="25,0,0,0"/>
+                        <oxy:PlotView Model="{Binding PlatformPlotModel}" Width="150" Height="125" Margin="25,0,0,0"/>
                     </StackPanel>
                 </Border>
-
             </UniformGrid>
         </Grid>
     </Grid>

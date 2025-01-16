@@ -4,12 +4,12 @@
         Title="UpdateJeux" Height="582" Width="930" Background="#063455" 
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <!-- Définit la structure principale avec deux colonnes -->
+        
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
             <!-- Menu latéral -->
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="200" />
             <!-- Contenu principal -->
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!-- Menu latéral -->
@@ -26,14 +26,14 @@
         <!-- Contenu principal -->
         <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <!-- Titre -->
                 <RowDefinition Height="Auto" />
                 <!-- Label de modification -->
-                <RowDefinition Height="*" />
-                <!-- Formulaire -->
                 <RowDefinition Height="Auto" />
+                <!-- Formulaire -->
+                <RowDefinition Height="*" />
                 <!-- Bouton Modifier -->
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!-- Titre principal -->
@@ -44,7 +44,7 @@
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
                    Margin="0,10"
- />
+            />
 
             <!-- Label de modification -->
             <TextBox x:Name="LabelAdd"
@@ -78,10 +78,10 @@
             <!-- Formulaire -->
             <Grid Grid.Row="2" Margin="50,90,50,10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200" />
                     <!-- Labels -->
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="200" />
                     <!-- Valeurs -->
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Labels à gauche -->
