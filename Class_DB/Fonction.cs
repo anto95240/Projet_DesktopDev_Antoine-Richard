@@ -12,7 +12,7 @@ namespace Projet_DesktopDev_Antoine_Richard.Class_DB
 {
     class Fonction
     {
-        private const string ConnectionString = "Data Source=../../../Database/db_gameCollector.db;Version=3;";
+        private const string ConnectionString = "Data Source=../Database/db_gameCollector.db;Version=3;";
 
         public static SQLiteConnection GetConnection()
         {
