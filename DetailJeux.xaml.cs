@@ -70,15 +70,8 @@ namespace Projet_DesktopDev_Antoine_Richard
 
                 if (!string.IsNullOrEmpty(gameDetails.Image))
                 {
-                    try
-                    {
-                        var imagePath = System.IO.Path.GetFullPath(gameDetails.Image);
-                        Image_Form.Source = new BitmapImage(new Uri(imagePath));
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Erreur lors du chargement de l'image : " + ex.Message);
-                    }
+                    var imagePath = System.IO.Path.GetFullPath(gameDetails.Image);
+                    Image_Form.Source = new BitmapImage(new Uri(imagePath));
                 }
             }
         }
