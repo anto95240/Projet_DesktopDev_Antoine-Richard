@@ -68,10 +68,16 @@ namespace Projet_DesktopDev_Antoine_Richard
                 Plateforme_Form.Content = gameDetails.Plateforme;
                 Genre_Form.Content = gameDetails.Genre;
 
+                string imagePath;
+
                 if (!string.IsNullOrEmpty(gameDetails.Image))
                 {
-                    var imagePath = System.IO.Path.GetFullPath(gameDetails.Image);
-                    Image_Form.Source = new BitmapImage(new Uri(imagePath));
+                    imagePath = System.IO.Path.GetFullPath(gameDetails.Image);
+                }
+                else
+                {
+                    // Chemin de l'image par défaut
+                    imagePath = System.IO.Path.GetFullPath("Images/logo indi.png");
                 }
             }
         }
