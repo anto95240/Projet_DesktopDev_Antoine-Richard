@@ -80,10 +80,6 @@ namespace Projet_DesktopDev_Antoine_Richard
                         MessageBox.Show("Erreur lors du chargement de l'image : " + ex.Message);
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Aucune image trouvée pour ce jeu.");
-                }
             }
         }
 

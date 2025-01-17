@@ -3,7 +3,9 @@ using OxyPlot.Series;
 using Projet_DesktopDev_Antoine_Richard.Class_DB;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Text.Json;
 
 namespace Projet_DesktopDev_Antoine_Richard.ViewModels
 {
@@ -13,15 +15,40 @@ namespace Projet_DesktopDev_Antoine_Richard.ViewModels
         public string Fill { get; set; }
     }
 
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
+        private int _finishedGames;
+        public int FinishedGames
+        {
+            get { return _finishedGames; }
+            set
+            {
+                if (_finishedGames != value)
+                {
+                    _finishedGames = value;
+                    OnPropertyChanged(nameof(FinishedGames));
+                }
+            }
+        }
+
+        private int _totalGames;
+        public int TotalGames
+        {
+            get { return _totalGames; }
+            set
+            {
+                if (_totalGames != value)
+                {
+                    _totalGames = value;
+                    OnPropertyChanged(nameof(TotalGames));
+                }
+            }
+        }
+
         public PlotModel GenrePlotModel { get; set; }
         public PlotModel PlatformPlotModel { get; set; }
-        public int TotalGames { get; set; }
-        public int FinishedGames { get; set; }
         public List<StatData> GenreStats { get; set; }
         public List<StatData> PlatformStats { get; set; }
-
 
         private static Dictionary<string, string> genreColors = new Dictionary<string, string>();
         private static Dictionary<string, string> platformColors = new Dictionary<string, string>();
@@ -33,25 +60,25 @@ namespace Projet_DesktopDev_Antoine_Richard.ViewModels
 
             var games = SelectGame.GetAllGames() ?? new List<Game_Table>();
 
-            if (!games.Any())
-            {
-                Console.WriteLine("Aucun jeu trouvé dans la base de données.");
-                return;
-            }
-
             string borderColor = "#3E527D";
             GenrePlotModel.Background = OxyColor.Parse(borderColor);
             PlatformPlotModel.Background = OxyColor.Parse(borderColor);
 
-            GenrePlotModel.Padding = new OxyThickness(20, 20, 20, 20);
-            PlatformPlotModel.Padding = new OxyThickness(20, 20, 20, 20);
+            RestoreSavedColors();
 
             if (genreColors.Count == 0 || platformColors.Count == 0)
             {
                 GenerateColorsForGenresAndPlatforms(games);
+                SaveColors();
             }
 
-            // Statistiques par genre
+            loadStatGenre();
+            loadStatPlateforme();
+        }
+
+        private void loadStatGenre()
+        {
+            var games = SelectGame.GetAllGames() ?? new List<Game_Table>();
             var genreGroups = games.Where(game => !string.IsNullOrEmpty(game.Genre))
                                    .GroupBy(game => game.Genre)
                                    .Select(group => new { Genre = group.Key, Count = group.Count() })
@@ -85,8 +112,10 @@ namespace Projet_DesktopDev_Antoine_Richard.ViewModels
             }
 
             GenrePlotModel.Series.Add(genreSeries);
-
-            // Statistiques par plateforme
+        }
+        private void loadStatPlateforme()
+        {
+            var games = SelectGame.GetAllGames() ?? new List<Game_Table>();
             var platformGroups = games.Where(game => !string.IsNullOrEmpty(game.Plateforme))
                                       .GroupBy(game => game.Plateforme)
                                       .Select(group => new { Platform = group.Key, Count = group.Count() })
@@ -101,11 +130,13 @@ namespace Projet_DesktopDev_Antoine_Richard.ViewModels
             var platformSeries = new PieSeries
             {
                 StrokeThickness = 2,
-                InsideLabelPosition = 0.8,
+                InsideLabelPosition = 0.0,
                 InsideLabelFormat = "",
                 OutsideLabelFormat = "{0}",
                 TextColor = OxyColor.FromRgb(255, 255, 255)
             };
+
+            PlatformPlotModel.Padding = new OxyThickness(20, 20, 20, 20);
 
             foreach (var group in platformGroups)
             {
@@ -117,34 +148,39 @@ namespace Projet_DesktopDev_Antoine_Richard.ViewModels
             }
 
             PlatformPlotModel.Series.Add(platformSeries);
-
-            // Nombre de jeux terminés
-            FinishedGames = games.Count(game => game.status != null && game.status.Status_name == "terminé" || game.status.Status_name == "terminer");
-
-            // Calcul du nombre total de jeux
-            TotalGames = games.Count;
         }
 
-        // Fonction pour générer les couleurs aléatoires
         private void GenerateColorsForGenresAndPlatforms(IEnumerable<Game_Table> games)
         {
             var random = new Random();
+            foreach (var genre in games.Select(game => game.Genre).Distinct())
+                genreColors[genre] = $"#{random.Next(0x1000000):X6}";
+            foreach (var platform in games.Select(game => game.Plateforme).Distinct())
+                platformColors[platform] = $"#{random.Next(0x1000000):X6}";
+        }
 
-            // Générer une couleur pour chaque genre unique
-            var genres = games.Select(game => game.Genre).Distinct().Where(genre => !string.IsNullOrEmpty(genre));
-            foreach (var genre in genres)
-            {
-                string color = $"#{random.Next(0x1000000):X6}";
-                genreColors[genre] = color;
-            }
+        private void SaveColors()
+        {
+            Properties.Settings.Default.SavedGenreColors = JsonSerializer.Serialize(genreColors);
+            Properties.Settings.Default.SavedPlatformColors = JsonSerializer.Serialize(platformColors);
+            Properties.Settings.Default.Save();
+        }
 
-            // Générer une couleur pour chaque plateforme unique
-            var platforms = games.Select(game => game.Plateforme).Distinct().Where(platform => !string.IsNullOrEmpty(platform));
-            foreach (var platform in platforms)
-            {
-                string color = $"#{random.Next(0x1000000):X6}";
-                platformColors[platform] = color;
-            }
+        private void RestoreSavedColors()
+        {
+            var savedGenreColors = Properties.Settings.Default.SavedGenreColors;
+            var savedPlatformColors = Properties.Settings.Default.SavedPlatformColors;
+
+            if (!string.IsNullOrEmpty(savedGenreColors))
+                genreColors = JsonSerializer.Deserialize<Dictionary<string, string>>(savedGenreColors);
+            if (!string.IsNullOrEmpty(savedPlatformColors))
+                platformColors = JsonSerializer.Deserialize<Dictionary<string, string>>(savedPlatformColors);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

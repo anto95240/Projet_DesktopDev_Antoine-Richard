@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Projet_DesktopDev_Antoine_Richard.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SelectedStatus" Type="System.String" Scope="User">
+      <Value Profile="(Default)">terminer</Value>
+    </Setting>
+    <Setting Name="SelectedTotal" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Total</Value>
+    </Setting>
+    <Setting Name="SavedGenreColors" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{}</Value>
+    </Setting>
+    <Setting Name="SavedPlatformColors" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{}</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

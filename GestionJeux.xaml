@@ -64,7 +64,7 @@
                          Margin="0,50,20,20"                         
                          Visibility="{Binding SearchResultsVisibility}"
                          ItemsSource="{Binding SearchedGames}"
-                         DisplayMemberPath="name"
+                         DisplayMemberPath="Name"
                          SelectionChanged="SearchResults_SelectionChanged"/>
             </Grid>
 
